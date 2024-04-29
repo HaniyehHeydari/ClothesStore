@@ -49,6 +49,7 @@ internal class Program
             var context = services.GetRequiredService<StoreDbContext>();
             context.Database.Migrate();
         }
+        app.UseStaticFiles();
         app.UseCors("CorsPolicy");
         app.UseHttpsRedirection();
 
