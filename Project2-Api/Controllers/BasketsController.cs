@@ -11,9 +11,11 @@ namespace Project2_Api.Controllers
     public class BasketsController : ControllerBase
     {
         private readonly BasketService _basketService;
-        public BasketsController(BasketService basketService)
+        private readonly ProductService _productService;
+        public BasketsController(BasketService basketService, ProductService productService)
         {
             _basketService = basketService;
+            _productService = productService;
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -35,6 +37,15 @@ namespace Project2_Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(BasketAddRequestDto basket)
         {
+            var product = await _productService.FindByIdAsync(basket.ProductId);
+            if (product==null)
+            {
+                return NotFound(); 
+            }
+            if (product.Count<basket.Count)
+            {
+                return BadRequest("این تعداد کالا موجود نمی باشد"); 
+            }
             await _basketService.AddAsync(basket);
             return Ok();
         }
