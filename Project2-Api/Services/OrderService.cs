@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
+using Shared.Models.Order;
 using System.Collections.Generic;
 
 namespace Project2_Api.Services
@@ -25,6 +26,19 @@ namespace Project2_Api.Services
         public async Task AddAsync(Order order)
         {
             _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+        }
+        public async Task AddRengeAsync(List<OrderAddRequestDto> models)
+        {
+            var orders = models.Select(orderDto=>new Order
+            {
+                UserId = orderDto.UserId,
+                ProductId = orderDto.ProductId,
+                Count = orderDto.Count,
+                price = orderDto.price,
+                CreatedAt = DateTime.Now
+            });
+            _context.Orders.AddRange(orders);
             await _context.SaveChangesAsync();
         }
         public async Task EditAsync(Order order)

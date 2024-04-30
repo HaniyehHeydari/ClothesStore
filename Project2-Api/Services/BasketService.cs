@@ -23,15 +23,8 @@ namespace Project2_Api.Services
             List<Basket> baskets = await _context.Baskets.ToListAsync();
             return baskets;
         }
-        public async Task AddAsync(BasketAddRequestDto model)
+        public async Task AddAsync(Basket basket)
         {
-            Basket basket = new Basket
-            {
-                UserId = model.UserId,
-                ProductId = model.ProductId,
-                Count = model.Count,
-
-            };
             _context.Baskets.Add(basket);
             await _context.SaveChangesAsync();
         }
@@ -57,6 +50,11 @@ namespace Project2_Api.Services
             }
             _context.Baskets.Remove(basket);
             await _context.SaveChangesAsync();
+        }
+
+        internal async Task AddAsync(BasketAddRequestDto basket)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
+using Shared.Models.Order;
 
 namespace Project2_Api.Controllers
 {
@@ -27,9 +28,15 @@ namespace Project2_Api.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Add(Order order)
+        public async Task<IActionResult> Add(Order orders)
         {
-            await _ordertService.AddAsync(order);
+            await _ordertService.AddAsync(orders);
+            return Ok();
+        }
+        [HttpPost("AddRenge")]
+        public async Task<IActionResult> AddRenge(List<OrderAddRequestDto> orders)
+        {
+            await _ordertService.AddRengeAsync(orders);
             return Ok();
         }
         [HttpPut]
