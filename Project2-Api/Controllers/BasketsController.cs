@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
+using Shared.Models.Basket;
 
 namespace Project2_Api.Controllers
 {
@@ -26,8 +27,13 @@ namespace Project2_Api.Controllers
             var result = await _basketService.GetsAsync();
             return Ok(result);
         }
+        /// <summary>
+        /// اضافه کردن یک محصول به سبد خرید
+        /// </summary>
+        /// <param name="basket">اطلاعات محصول</param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Add(Basket basket)
+        public async Task<IActionResult> Add(BasketAddRequestDto basket)
         {
             await _basketService.AddAsync(basket);
             return Ok();

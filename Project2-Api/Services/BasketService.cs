@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
+using Shared.Models.Basket;
 using System.Collections.Generic;
 
 namespace Project2_Api.Services
@@ -22,8 +23,15 @@ namespace Project2_Api.Services
             List<Basket> baskets = await _context.Baskets.ToListAsync();
             return baskets;
         }
-        public async Task AddAsync(Basket basket)
+        public async Task AddAsync(BasketAddRequestDto model)
         {
+            Basket basket = new Basket
+            {
+                UserId = model.UserId,
+                ProductId = model.ProductId,
+                Count = model.Count,
+
+            };
             _context.Baskets.Add(basket);
             await _context.SaveChangesAsync();
         }
