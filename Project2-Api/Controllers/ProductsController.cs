@@ -33,6 +33,11 @@ namespace Project2_Api.Controllers
             var result = await _productService.GetsByCategoryAsync(categoryId);
             return Ok(result);
         }
+        /// <summary>
+        /// اضافه کردن یک محصول
+        /// </summary>
+        /// <param name="product">اضافه کردن یک محصول</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Add(Product product)
         {

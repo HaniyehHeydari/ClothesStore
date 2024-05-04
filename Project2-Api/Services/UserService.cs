@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
+using Shared.Models.User;
 
 namespace Project2_Api.Services
 {
@@ -21,8 +22,13 @@ namespace Project2_Api.Services
             List<User> users = await _context.Users.ToListAsync();
             return users;
         }
-        public async Task AddAsync(User user)
+        public async Task AddAsync(UserAddRequestDto model)
         {
+            User user = new User
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+            };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }

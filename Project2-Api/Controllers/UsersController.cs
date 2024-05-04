@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
+using Shared.Models.User;
 
 namespace Project2_Api.Controllers
 {
@@ -26,8 +27,13 @@ namespace Project2_Api.Controllers
             var result = await _userService.GetsAsync();
             return Ok(result);
         }
+        /// <summary>
+        /// اضافه کردن یک کاربر
+        /// </summary>
+        /// <param name="user">اطلاعات کاربر</param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Add(User user)
+        public async Task<IActionResult> Add(UserAddRequestDto user)
         {
             await _userService.AddAsync(user);
             return Ok();

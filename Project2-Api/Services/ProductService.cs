@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using Project2_Api.Controllers;
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Project2_Api.Services
 {

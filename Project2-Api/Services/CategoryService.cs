@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
+using Shared.Models.Category;
+using System.Xml.Linq;
 
 namespace Project2_Api.Services
 {
@@ -21,8 +23,13 @@ namespace Project2_Api.Services
             List<Category> categories = await _context.Categories.ToListAsync();
             return categories;
         }
-        public async Task AddAsync(Category category)
+        public async Task AddAsync(CategoryAddRequestDto model)
         {
+            Category category = new Category
+            {
+               Name = model.Name,
+               ImageFileName = model.ImageFileName,
+            };
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
         }

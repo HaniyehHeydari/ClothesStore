@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
+using Shared.Models.Category;
 
 namespace Project2_Api.Controllers
 {
@@ -26,8 +27,13 @@ namespace Project2_Api.Controllers
             var result = await _categoryService.GetsAsync();
             return Ok(result);
         }
+        /// <summary>
+        /// اضافه کردن یک دسته بندی
+        /// </summary>
+        /// <param name="category">اطلاعات دسته بندی</param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Add(Category category)
+        public async Task<IActionResult> Add(CategoryAddRequestDto category)
         {
             await _categoryService.AddAsync(category);
             return Ok();
