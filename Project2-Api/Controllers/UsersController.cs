@@ -19,6 +19,10 @@ namespace Project2_Api.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var result = await _userService.GetAsync(id);
+            if (result == null)
+            {
+                return NotFound("کاربری با این شناسه پیدا نشد.");
+            }
             return Ok(result);
         }
         [HttpGet]
