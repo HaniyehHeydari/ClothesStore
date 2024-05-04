@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
+using Shared.Models.Product;
 
 namespace Project2_Api.Controllers
 {
@@ -39,7 +40,7 @@ namespace Project2_Api.Controllers
         /// <param name="product">اضافه کردن یک محصول</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Add(Product product)
+        public async Task<IActionResult> Add(ProductAddRequestDto product)
         {
           await _productService.AddAsync(product);
             return Ok();

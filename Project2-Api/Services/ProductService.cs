@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Project2_Api.Controllers;
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
+using Shared.Models.Product;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -40,8 +41,18 @@ namespace Project2_Api.Services
             List<Product> products = await _context.Products.Where(product=> product.CategoryId== categoryId).ToListAsync();
             return products;
         }
-        public async Task AddAsync(Product product)
+        public async Task AddAsync(ProductAddRequestDto model)
         {
+            Product product = new Product
+            {
+              CategoryId = model.CategoryId,
+              Name = model.Name,
+              Description = model.Description,
+              Count = model.Count,
+              Price = model.Price,
+              CreatedAt = model.CreatedAt,
+              ImageFileName = model.ImageFileName,
+            };
             Category? category = await _context.Categories.FindAsync(product.CategoryId);
             if (category is null)
             {
