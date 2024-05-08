@@ -23,6 +23,8 @@ namespace Project2_Api.Services
             List<Order> orders = await _context.Orders.ToListAsync();
             return orders;
         }
+
+
         public async Task AddAsync(Order order)
         {
             _context.Orders.Add(order);
@@ -37,7 +39,7 @@ namespace Project2_Api.Services
                 Count = orderDto.Count,
                 price = orderDto.price,
                 CreatedAt = DateTime.Now
-            });
+            }).ToList();
             _context.Orders.AddRange(orders);
             await _context.SaveChangesAsync();
         }
@@ -66,6 +68,11 @@ namespace Project2_Api.Services
             }
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
+        }
+
+        internal async Task AddAsync(object order)
+        {
+            throw new NotImplementedException();
         }
     }
 }
