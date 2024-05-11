@@ -52,7 +52,6 @@ namespace Project2_Api.Services
             }
             oldOrder.UserId = order.UserId;
             oldOrder.ProductId = order.ProductId;
-            oldOrder.BasketId = order.BasketId;
             oldOrder.Count = oldOrder.Count;
             oldOrder.price = oldOrder.price;
             oldOrder.CreatedAt = oldOrder.CreatedAt;
