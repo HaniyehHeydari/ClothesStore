@@ -4,6 +4,7 @@ using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
 using Shared.Models.Product;
+using Shared.Models.Products;
 
 namespace Project2_Api.Controllers
 {
@@ -26,6 +27,12 @@ namespace Project2_Api.Controllers
         public async Task<IActionResult> Gets()
         {
             var result = await _productService.GetsAsync();
+            return Ok(result);
+        }
+        [HttpGet("Search")]
+        public async Task<IActionResult> Search([FromQuery]SearchRequestDto model)
+        {
+            var result = await _productService.SearchAsync(model);
             return Ok(result);
         }
         [HttpGet("GetByCategory")]
