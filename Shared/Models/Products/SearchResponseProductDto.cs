@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Models.Products
 {
-    public class SearchResponseDto
+    public class SearchResponseProductDto
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }

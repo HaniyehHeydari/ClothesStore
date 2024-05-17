@@ -89,7 +89,7 @@ namespace Project2_Api.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<SearchResponseDto>> SearchAsync(SearchRequestDto model)
+        public async Task<List<SearchResponseProductDto>> SearchAsync(SearchRequestProductDto model)
         {
             var products = await _context.Products
                                     .Where(a =>
@@ -101,7 +101,7 @@ namespace Project2_Api.Services
                                     )
                                     .Skip(model.PageNo * model.PageSize)
                                     .Take(model.PageSize)
-                                    .Select(a => new SearchResponseDto
+                                    .Select(a => new SearchResponseProductDto
                                     {
                                         ProductId = a.Id,
                                         ProductName = a.Name,

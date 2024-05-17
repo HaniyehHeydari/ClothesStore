@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
 using Shared.Models.Basket;
+using Shared.Models.Baskets;
 
 namespace Project2_Api.Controllers
 {
@@ -27,6 +28,12 @@ namespace Project2_Api.Controllers
         public async Task<IActionResult> Gets()
         {
             var result = await _basketService.GetsAsync();
+            return Ok(result);
+        }
+        [HttpGet("Search")]
+        public async Task<IActionResult> Search([FromQuery]SearchRequestBasketDto model)
+        {
+            var result = await _basketService.SearchAsync(model);
             return Ok(result);
         }
         /// <summary>

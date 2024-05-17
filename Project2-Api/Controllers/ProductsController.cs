@@ -30,7 +30,7 @@ namespace Project2_Api.Controllers
             return Ok(result);
         }
         [HttpGet("Search")]
-        public async Task<IActionResult> Search([FromQuery]SearchRequestDto model)
+        public async Task<IActionResult> Search([FromQuery]SearchRequestProductDto model)
         {
             var result = await _productService.SearchAsync(model);
             return Ok(result);
