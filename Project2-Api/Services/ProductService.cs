@@ -91,18 +91,35 @@ namespace Project2_Api.Services
 
         public async Task<List<SearchResponseProductDto>> SearchAsync(SearchRequestProductDto model)
         {
-            var products = await _context.Products
+            IQueryable<Product> products = _context.Products
                                     .Where(a =>
                                     (model.Count == null || a.Count <= model.Count)
                                     && (model.FromDate == null || a.CreatedAt >= model.FromDate)
                                     && (model.ToDate == null || a.CreatedAt <= model.ToDate)
                                     && (model.CategoryName == null || a.Category.Name.Contains(model.CategoryName))
                                     && (model.ProductName == null || a.Name.Contains(model.ProductName))
-                                    )
-                                    .Skip(model.PageNo * model.PageSize)
-                                    .Take(model.PageSize)
-                                    .Select(a => new SearchResponseProductDto
-                                    {
+                                    && (model.MinPrice == null || a.Price >= model.MinPrice)
+                                    && (model.MaxPrice == null || a.Price <= model.MaxPrice));
+            if (!string.IsNullOrEmpty(model.SortBy))
+            {
+                switch (model.SortBy)
+                {
+                    case "PriceAsc":
+                        products = products.OrderBy(a => a.Price);
+                        break;
+                    case "PriceDesc":
+                        products = products.OrderByDescending(a => a.Price);
+                        break;
+                }
+            }
+
+
+            products = products
+                                .Skip(model.PageNo * model.PageSize)
+                                .Take(model.PageSize);
+            var Products = await products
+                                .Select(a => new SearchResponseProductDto
+                                {
                                         ProductId = a.Id,
                                         ProductName = a.Name,
                                         CategoryId = a.CategoryId,
@@ -113,10 +130,9 @@ namespace Project2_Api.Services
                                         CategoryName = a.Category.Name,
                                         CategoryImageFileName = a.Category.ImageFileName,
                                         ProductImageFileName = a.ImageFileName,
-                                    }
-                                    )
-                                    .ToListAsync();
-            return products;
+                                })
+                                 .ToListAsync();
+            return Products;
         }
     }
 }
