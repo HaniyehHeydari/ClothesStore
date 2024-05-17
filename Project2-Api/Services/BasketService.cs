@@ -65,7 +65,8 @@ namespace Project2_Api.Services
             var baskets = await _context.Baskets
                                    .Where(a =>
                                    (model.Count == null || a.Count <= model.Count)
-                                   && (model.UserName == null || a.User.FirstName.Contains(model.ProductName))
+                                   && (model.UserFirstName == null || a.User.FirstName.Contains(model.UserFirstName))
+                                   && (model.UserLastName == null || a.User.LastName.Contains(model.UserLastName))
                                    && (model.ProductName == null || a.Product.Name.Contains(model.ProductName))
                                    )
                                    .Skip(model.PageNo * model.PageSize)
@@ -75,8 +76,8 @@ namespace Project2_Api.Services
                                        BasketId = a.Id,
                                        BasketCount = a.Count,
                                        UserId = a.Id,
-                                       FirstName = a.User.FirstName,
-                                       LastName = a.User.LastName,
+                                       UserFirstName = a.User.FirstName,
+                                       UserLastName = a.User.LastName,
                                        ProductId = a.Id,
                                        CategoryId = a.Product.CategoryId,
                                        ProductName = a.Product.Name,

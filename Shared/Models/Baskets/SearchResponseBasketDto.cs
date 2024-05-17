@@ -12,8 +12,8 @@ namespace Shared.Models.Baskets
         public int BasketId { get; set; }
         public int BasketCount { get; set; }
         public int UserId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
         public string ProductName { get; set; }

@@ -5,6 +5,8 @@ using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
 using Shared.Models.Order;
+using Shared.Models.Orders;
+using Shared.Models.Products;
 
 namespace IbulakStoreServer.Controllers
 {
@@ -34,7 +36,13 @@ namespace IbulakStoreServer.Controllers
             var result = await _orderService.GetsAsync();
             return Ok(result);
         }
-      
+        [HttpGet("Search")]
+        public async Task<IActionResult> Search([FromQuery] SearchRequestOrderDto model)
+        {
+            var result = await _orderService.SearchAsync(model);
+            return Ok(result);
+        }
+
         // [HttpPost]
         // public async Task<IActionResult> Add(Order order)
         // {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Project2_Api.Services;
 internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main(string[] args, StoreDbContext context)
     {
         var builder = WebApplication.CreateBuilder(args);
 

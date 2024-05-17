@@ -2,6 +2,8 @@
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
 using Shared.Models.Order;
+using Shared.Models.Orders;
+using Shared.Models.Products;
 using System.Collections.Generic;
 
 namespace Project2_Api.Services
@@ -72,6 +74,37 @@ namespace Project2_Api.Services
         internal async Task AddAsync(object order)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<SearchResponseOrderDto>> SearchAsync(SearchRequestOrderDto model)
+        {
+            var orders = await _context.Orders
+                                    .Where(a =>
+                                    (model.Count == null || a.Count <= model.Count)
+                                    && (model.FromDate == null || a.CreatedAt >= model.FromDate)
+                                    && (model.ToDate == null || a.CreatedAt <= model.ToDate)
+                                    && (model.UserFirstName == null || a.User.FirstName.Contains(model.UserFirstName))
+                                    && (model.UserLastName == null || a.User.LastName.Contains(model.UserLastName))
+                                    && (model.ProductName == null || a.Product.Name.Contains(model.ProductName))
+                                    )
+                                    .Skip(model.PageNo * model.PageSize)
+                                    .Take(model.PageSize)
+                                    .Select(a => new SearchResponseOrderDto
+                                    {
+                                        ProductId = a.Id,
+                                        ProductName = a.Product.Name,
+                                        UserId = a.UserId,
+                                        Count = a.Product.Count,
+                                        Price = a.Product.Price,
+                                        CreatedAt = a.Product.CreatedAt,
+                                        Description = a.Product.Description,
+                                        UserFirstName = a.User.FirstName,
+                                        UserLastName = a.User.LastName,
+                                        ProductImageFileName = a.Product.ImageFileName,
+                                    }
+                                    )
+                                    .ToListAsync();
+            return orders;
         }
     }
 }
