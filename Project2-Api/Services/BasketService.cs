@@ -62,16 +62,31 @@ namespace Project2_Api.Services
 
         public async Task<List<SearchResponseBasketDto>> SearchAsync(SearchRequestBasketDto model)
         {
-            var baskets = await _context.Baskets
+            IQueryable<Basket> baskets = _context.Baskets
                                    .Where(a =>
                                    (model.Count == null || a.Count <= model.Count)
                                    && (model.UserFirstName == null || a.User.FirstName.Contains(model.UserFirstName))
                                    && (model.UserLastName == null || a.User.LastName.Contains(model.UserLastName))
                                    && (model.ProductName == null || a.Product.Name.Contains(model.ProductName))
-                                   )
-                                   .Skip(model.PageNo * model.PageSize)
-                                   .Take(model.PageSize)
-                                   .Select(a => new SearchResponseBasketDto
+                                   );
+            if (!string.IsNullOrEmpty(model.SortBy))
+            {
+                switch (model.SortBy)
+                {
+                    case "CountAsc":
+                        baskets = baskets.OrderBy(a => a.Count);
+                        break;
+                    case "CountDesc":
+                        baskets = baskets.OrderByDescending(a => a.Count);
+                        break;
+                }
+            }
+            baskets = baskets
+                              .Skip(model.PageNo * model.PageSize)
+                              .Take(model.PageSize);
+
+            var Baskets = await baskets
+                              .Select(a => new SearchResponseBasketDto
                                    {
                                        BasketId = a.Id,
                                        BasketCount = a.Count,
@@ -86,10 +101,9 @@ namespace Project2_Api.Services
                                        Price = a.Product.Price,
                                        CreatedAt = a.Product.CreatedAt,
                                        ImageFileName = a.Product.ImageFileName,
-                                   }
-                                   )
+                                   })
                                    .ToListAsync();
-            return baskets;
+            return Baskets;
         }
     }
 }

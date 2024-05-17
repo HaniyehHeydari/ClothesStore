@@ -14,5 +14,6 @@ namespace Shared.Models.Baskets
         public string? UserFirstName { get; set; }
         public string? UserLastName { get; set; }
         public string? ProductName { get; set; }
+        public string? SortBy { get; set; }
     }
 }

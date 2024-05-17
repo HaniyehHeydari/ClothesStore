@@ -78,33 +78,50 @@ namespace Project2_Api.Services
 
         public async Task<List<SearchResponseOrderDto>> SearchAsync(SearchRequestOrderDto model)
         {
-            var orders = await _context.Orders
-                                    .Where(a =>
-                                    (model.Count == null || a.Count <= model.Count)
-                                    && (model.FromDate == null || a.CreatedAt >= model.FromDate)
-                                    && (model.ToDate == null || a.CreatedAt <= model.ToDate)
-                                    && (model.UserFirstName == null || a.User.FirstName.Contains(model.UserFirstName))
-                                    && (model.UserLastName == null || a.User.LastName.Contains(model.UserLastName))
-                                    && (model.ProductName == null || a.Product.Name.Contains(model.ProductName))
-                                    )
-                                    .Skip(model.PageNo * model.PageSize)
-                                    .Take(model.PageSize)
-                                    .Select(a => new SearchResponseOrderDto
-                                    {
-                                        ProductId = a.Id,
-                                        ProductName = a.Product.Name,
-                                        UserId = a.UserId,
-                                        Count = a.Product.Count,
-                                        Price = a.Product.Price,
-                                        CreatedAt = a.Product.CreatedAt,
-                                        Description = a.Product.Description,
-                                        UserFirstName = a.User.FirstName,
-                                        UserLastName = a.User.LastName,
-                                        ProductImageFileName = a.Product.ImageFileName,
-                                    }
-                                    )
-                                    .ToListAsync();
-            return orders;
+            IQueryable<Order> orders = _context.Orders
+               .Where(a =>
+                               (model.Count == null || a.Count <= model.Count)
+                               && (model.FromDate == null || a.CreatedAt >= model.FromDate)
+                               && (model.ToDate == null || a.CreatedAt <= model.ToDate)
+                               && (model.UserFirstName == null || a.User.FirstName.Contains(model.UserFirstName))
+                               && (model.UserLastName == null || a.User.LastName.Contains(model.UserLastName))
+                               && (model.ProductName == null || a.Product.Name.Contains(model.ProductName))
+                               );
+
+            if (!string.IsNullOrEmpty(model.SortBy))
+            {
+                switch (model.SortBy)
+                {
+                    case "CountAsc":
+                        orders = orders.OrderBy(a => a.Count);
+                        break;
+                    case "CountDesc":
+                        orders = orders.OrderByDescending(a => a.Count);
+                        break;
+                }
+            }
+
+            orders = orders
+                            .Skip(model.PageNo * model.PageSize)
+                            .Take(model.PageSize);
+
+            var Orders = await orders
+                            .Select(a => new SearchResponseOrderDto
+                             {
+                                  ProductId = a.Id,
+                                  ProductName = a.Product.Name,
+                                  UserId = a.UserId,
+                                  Count = a.Count,
+                                  Price = a.price,
+                                  CreatedAt = a.CreatedAt,
+                                  Description = a.Product.Description,
+                                  UserFirstName = a.User.FirstName,
+                                  UserLastName = a.User.LastName,
+                                   ProductImageFileName = a.Product.ImageFileName
+                             })
+                            .ToListAsync();
+
+            return Orders;
         }
     }
 }
