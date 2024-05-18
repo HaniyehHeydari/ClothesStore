@@ -122,6 +122,34 @@ namespace Project2_Api.Services
 
             return Orders;
         }
-     
+
+        public async Task<List<OrderReportByProductResponseDto>> OrdersReportByProductAsync(OrderReportByProductRequestDto model)
+        {
+            var ordersQuery = _context.Orders.Where(a =>
+                                       (model.FromDate == null || a.CreatedAt >= model.FromDate)
+                                    && (model.ToDate == null || a.CreatedAt <= model.ToDate)
+                                   )
+                .GroupBy(a => a.ProductId)
+                .Select(a => new
+                {
+                    ProductId = a.Key,
+                    TotalSum = a.Sum(s => s.price),
+                });
+            var productsQuery = from product in _context.Products
+                           from order in ordersQuery.Where(a => a.ProductId == product.Id).DefaultIfEmpty()
+                           select new OrderReportByProductResponseDto
+                           {
+                               ProductId = product.Id,
+                               ProductName =product.Name,
+                               ProductCategoryName=product.Category.Name,
+                               TotalSum=(int?) order.TotalSum
+
+                           };
+            productsQuery= productsQuery.Skip(model.PageNo * model.PageSize)
+                                .Take(model.PageSize);
+            var result = await productsQuery.ToListAsync();
+            return result;
+
+        }
     }
 }
