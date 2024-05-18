@@ -42,7 +42,6 @@ namespace IbulakStoreServer.Controllers
             var result = await _orderService.SearchAsync(model);
             return Ok(result);
         }
-
         // [HttpPost]
         // public async Task<IActionResult> Add(Order order)
         // {

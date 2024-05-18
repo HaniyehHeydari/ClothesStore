@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Project2_Api.Services;
 internal class Program
 {
-    private static void Main(string[] args, StoreDbContext context)
+    private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -46,8 +46,8 @@ internal class Program
         {
             var services = scope.ServiceProvider;
 
-            var context = services.GetRequiredService<StoreDbContext>();
-            context.Database.Migrate();
+            var context1 = services.GetRequiredService<StoreDbContext>();
+            context1.Database.Migrate();
         }
         app.UseStaticFiles();
         app.UseCors("CorsPolicy");

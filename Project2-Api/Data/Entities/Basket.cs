@@ -12,8 +12,6 @@ namespace Project2_Api.Data.Entities
         public int Count { get; set; }
         public virtual User User { get; set; } = default!;
         public virtual Product Product { get; set; } = default!;
-        public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
         public DateTime? CreatedAt { get; internal set; }
-        public object Category { get; internal set; }
     }
 }

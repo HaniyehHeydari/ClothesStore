@@ -3,7 +3,6 @@ using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
 using Shared.Models.Order;
 using Shared.Models.Orders;
-using Shared.Models.Products;
 using System.Collections.Generic;
 
 namespace Project2_Api.Services
@@ -123,5 +122,6 @@ namespace Project2_Api.Services
 
             return Orders;
         }
+     
     }
 }
