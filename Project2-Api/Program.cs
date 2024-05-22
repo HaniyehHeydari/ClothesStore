@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Project2_Api.Services;
 using Project2_Api.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 internal class Program
 {
     private static void Main(string[] args)
@@ -39,6 +40,7 @@ internal class Program
                    options.Password.RequireDigit = false;
                    options.Password.RequiredLength = 6;
                })
+               .AddRoles<IdentityRole>()
                .AddEntityFrameworkStores<StoreDbContext>();
 
         builder.Services.AddScoped<ProductService>();
@@ -70,7 +72,6 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllers();
-        app.MapGroup("/account").MapIdentityApi<AppUser>();
 
         app.Run();
     }

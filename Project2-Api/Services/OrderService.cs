@@ -24,7 +24,16 @@ namespace Project2_Api.Services
             List<Order> orders = await _context.Orders.ToListAsync();
             return orders;
         }
-
+        public async Task<List<Order?>> GetsByProductAsync(int productId)
+        {
+            List<Order> orders = await _context.Orders.Where(order => order.ProductId == productId).ToListAsync();
+            return orders;
+        }
+        public async Task<List<Order?>> GetsByUserAsync(string userId)
+        {
+            List<Order> orders = await _context.Orders.Where(order => order.UserId == userId).ToListAsync();
+            return orders;
+        }
 
         public async Task AddAsync(Order order)
         {
@@ -116,7 +125,7 @@ namespace Project2_Api.Services
                                   Description = a.Product.Description,
                                   UserFirstName = a.User.FirstName,
                                   UserLastName = a.User.LastName,
-                                   ProductImageFileName = a.Product.ImageFileName
+                                  ProductImageFileName = a.Product.ImageFileName
                              })
                             .ToListAsync();
 

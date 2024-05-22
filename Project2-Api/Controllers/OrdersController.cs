@@ -36,6 +36,18 @@ namespace IbulakStoreServer.Controllers
             var result = await _orderService.GetsAsync();
             return Ok(result);
         }
+        [HttpGet("GetsByProduct")]
+        public async Task<IActionResult> GetsByProduct(int productId)
+        {
+            var result = await _orderService.GetsByProductAsync(productId);
+            return Ok(result);
+        }
+        [HttpGet("GetsByUser")]
+        public async Task<IActionResult> GetsByUser(string userId)
+        {
+            var result = await _orderService.GetsByUserAsync(userId);
+            return Ok(result);
+        }
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery] SearchRequestOrderDto model)
         {

@@ -36,8 +36,14 @@ namespace Project2_Api.Services
             List<Basket> baskets = await _context.Baskets.Where(basket => basket.UserId == userId).ToListAsync();
             return baskets;
         }
-        public async Task AddAsync(Basket basket)
+        public async Task AddAsync(BasketAddRequestDto model)
         {
+            Basket basket = new Basket
+            {
+                UserId = model.UserId,
+                Count = model.Count,
+                ProductId = model.ProductId,
+            };
             _context.Baskets.Add(basket);
             await _context.SaveChangesAsync();
         }
@@ -63,11 +69,6 @@ namespace Project2_Api.Services
             }
             _context.Baskets.Remove(basket);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task AddAsync(BasketAddRequestDto basket)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<List<SearchResponseBasketDto>> SearchAsync(SearchRequestBasketDto model)
