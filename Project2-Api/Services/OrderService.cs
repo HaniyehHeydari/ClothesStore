@@ -187,5 +187,36 @@ namespace Project2_Api.Services
             var result = await productsQuery.ToListAsync();
             return result;
         }
+
+        public async Task<List<OrderReportByProductNameResponseDto>> OrderReportByProductNameAsync(OrderReportByProductNameRequestDto model)
+        {
+            var filteredProducts = _context.Products
+                                            .Where(p => model.ProductName == null || p.Name.Contains(model.ProductName));
+
+            var ordersWithFilteredProducts = await _context.Orders
+                                                             .Join(filteredProducts,
+                                                                   order => order.ProductId,
+                                                                   product => product.Id,
+                                                                   (order, product) => new { Order = order, Product = product })
+                                                                 .GroupBy(x => x.Order.ProductId)
+                                                                 .Select(g => new
+                                                                 {
+                                                                     ProductId = g.Key,
+                                                                     OrderSum = g.Sum(x => x.Order.price * x.Order.Count),
+                                                                     ProductName = g.FirstOrDefault().Product.Name
+                                                                 })
+                                                                 .ToListAsync();
+
+            var result = ordersWithFilteredProducts.Select(o => new OrderReportByProductNameResponseDto
+            {
+                ProductName = o.ProductName,
+                ProductId = o.ProductId,
+                OrderSum = o.OrderSum
+            }).ToList();
+
+            result = result.Skip((model.PageNo) * model.PageSize).Take(model.PageSize).ToList();
+
+            return result;
+        }
     }
-}
+}  
