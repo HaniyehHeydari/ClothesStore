@@ -80,5 +80,11 @@ namespace Project2_Api.Controllers
             await _basketService.DeleteAsync(id);
             return Ok();
         }
+        [HttpGet("BasketReportByUser")]
+        public async Task<IActionResult> BasketReportByUser([FromQuery] BasketReportByUserRequestDto model)
+        {
+            var result = await _basketService.BasketReportByUserAsync(model);
+            return Ok(result);
+        }
     }
 }
