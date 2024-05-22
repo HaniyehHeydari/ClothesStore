@@ -31,7 +31,14 @@ internal class Program
         options.UseSqlite(builder.Configuration.GetConnectionString("WebApiDatabase")));
 
         builder.Services
-               .AddIdentityApiEndpoints<AppUser>()
+               .AddIdentityApiEndpoints<AppUser>(options=>
+               {
+                   options.Password.RequireNonAlphanumeric = false;
+                   options.Password.RequireLowercase = false;
+                   options.Password.RequireUppercase = false;
+                   options.Password.RequireDigit = false;
+                   options.Password.RequiredLength = 6;
+               })
                .AddEntityFrameworkStores<StoreDbContext>();
 
         builder.Services.AddScoped<ProductService>();

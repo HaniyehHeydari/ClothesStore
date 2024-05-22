@@ -11,7 +11,7 @@ namespace Shared.Models.Basket
         /// <summary>
         /// شناسه کاربر
         /// </summary>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// شناسه محصول
         /// </summary>

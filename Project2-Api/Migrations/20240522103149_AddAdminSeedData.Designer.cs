@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project2_Api.Data.Domain;
 
@@ -10,9 +11,11 @@ using Project2_Api.Data.Domain;
 namespace Project2_Api.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522103149_AddAdminSeedData")]
+    partial class AddAdminSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -51,7 +54,7 @@ namespace Project2_Api.Migrations
                         },
                         new
                         {
-                            Id = "4f73ccd6-d073-4a53-beb9-5b3729d39f27",
+                            Id = "3c81513f-540a-4b31-a195-dbb50abbf054",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -185,14 +188,6 @@ namespace Project2_Api.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
 
@@ -242,15 +237,13 @@ namespace Project2_Api.Migrations
                         {
                             Id = "2426167f-842e-4933-ae72-d8dfe34abf78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b2675cf2-9d5f-4462-92b3-2c3a5dda7c91",
+                            ConcurrencyStamp = "b7b4b317-a963-476d-af6e-e6c4ef422532",
                             Email = "heyadrihaniyeh51@gmail.com",
                             EmailConfirmed = true,
-                            FirstName = "haniye",
-                            LastName = "heydari",
                             LockoutEnabled = false,
                             NormalizedEmail = "heyadrihaniyeh51@gmail.com",
                             NormalizedUserName = "09105586224",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB9VbhId2Rs1aUeUS9R68npvEqo9Y1XDzDv1Oek+sqZYl2fPXhOJZV5K4mEKXZR15g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBBZj2OaZSeQ1gGttvkmDk772sO9X57hPUX7Iad313Zp0Tun2f62XCjsEXb8JoESWA==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -267,14 +260,13 @@ namespace Project2_Api.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("UserId1")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -282,8 +274,6 @@ namespace Project2_Api.Migrations
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Baskets");
                 });
@@ -452,15 +442,11 @@ namespace Project2_Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project2_Api.Data.Entities.AppUser", "User")
-                        .WithMany()
+                    b.HasOne("Project2_Api.Data.Entities.User", "User")
+                        .WithMany("Baskets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Project2_Api.Data.Entities.User", null)
-                        .WithMany("Baskets")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Product");
 

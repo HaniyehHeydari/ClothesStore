@@ -26,6 +26,16 @@ namespace Project2_Api.Services
             List<Basket> baskets = await _context.Baskets.ToListAsync();
             return baskets;
         }
+        public async Task<List<Basket?>> GetsByProductAsync(int productId)
+        {
+            List<Basket> baskets = await _context.Baskets.Where(basket => basket.ProductId == productId).ToListAsync();
+            return baskets;
+        }
+        public async Task<List<Basket?>> GetsByUserAsync(string userId)
+        {
+            List<Basket> baskets = await _context.Baskets.Where(basket => basket.UserId == userId).ToListAsync();
+            return baskets;
+        }
         public async Task AddAsync(Basket basket)
         {
             _context.Baskets.Add(basket);
@@ -55,7 +65,7 @@ namespace Project2_Api.Services
             await _context.SaveChangesAsync();
         }
 
-        internal async Task AddAsync(BasketAddRequestDto basket)
+        public async Task AddAsync(BasketAddRequestDto basket)
         {
             throw new NotImplementedException();
         }

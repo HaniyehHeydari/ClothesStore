@@ -30,6 +30,18 @@ namespace Project2_Api.Controllers
             var result = await _basketService.GetsAsync();
             return Ok(result);
         }
+        [HttpGet("GetsByProduct")]
+        public async Task<IActionResult> GetsByProduct(int productId)
+        {
+            var result = await _basketService.GetsByProductAsync(productId);
+            return Ok(result);
+        }
+        [HttpGet("GetsByUser")]
+        public async Task<IActionResult> GetsByUser(string userId)
+        {
+            var result = await _basketService.GetsByUserAsync(userId);
+            return Ok(result);
+        }
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery]SearchRequestBasketDto model)
         {

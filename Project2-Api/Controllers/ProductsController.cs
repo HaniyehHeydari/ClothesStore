@@ -18,13 +18,14 @@ namespace Project2_Api.Controllers
         {
             _productService = productService;
         }
+        [Authorize(Roles ="User")]
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _productService.GetAsync(id);
             return Ok(result);
         }
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Gets()
         {
@@ -48,6 +49,8 @@ namespace Project2_Api.Controllers
         /// </summary>
         /// <param name="product">اضافه کردن یک محصول</param>
         /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         public async Task<IActionResult> Add(ProductAddRequestDto product)
         {
