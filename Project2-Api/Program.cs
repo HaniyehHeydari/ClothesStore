@@ -2,6 +2,7 @@ using Project2_Api.Data.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Project2_Api.Services;
+using Project2_Api.Data.Entities;
 internal class Program
 {
     private static void Main(string[] args)
@@ -24,8 +25,14 @@ internal class Program
                              .AllowCredentials()
                              .Build());
         });
+        builder.Services.AddAuthorization();
+
         builder.Services.AddDbContext<StoreDbContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("WebApiDatabase")));
+
+        builder.Services
+               .AddIdentityApiEndpoints<AppUser>()
+               .AddEntityFrameworkStores<StoreDbContext>();
 
         builder.Services.AddScoped<ProductService>();
         builder.Services.AddScoped<CategoryService>();
@@ -56,6 +63,7 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllers();
+        app.MapGroup("/account").MapIdentityApi<AppUser>();
 
         app.Run();
     }

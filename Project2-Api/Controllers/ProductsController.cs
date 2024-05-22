@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Api.Data.Domain;
 using Project2_Api.Data.Entities;
@@ -23,6 +24,7 @@ namespace Project2_Api.Controllers
             var result = await _productService.GetAsync(id);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Gets()
         {
