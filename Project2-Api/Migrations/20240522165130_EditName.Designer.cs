@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project2_Api.Data.Domain;
 
@@ -10,9 +11,11 @@ using Project2_Api.Data.Domain;
 namespace Project2_Api.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522165130_EditName")]
+    partial class EditName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -51,7 +54,7 @@ namespace Project2_Api.Migrations
                         },
                         new
                         {
-                            Id = "8bb11e06-36ad-47ec-8f11-7c97fe3fa3a6",
+                            Id = "1fc13af3-d988-4e6f-bd39-9ef6b8ce0595",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -242,7 +245,7 @@ namespace Project2_Api.Migrations
                         {
                             Id = "2426167f-842e-4933-ae72-d8dfe34abf78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "44756ed7-be21-4e6d-929c-a912682fb7c9",
+                            ConcurrencyStamp = "f6b7b9f0-51c4-493a-b4f9-6b9e84ad4a2b",
                             Email = "heyadrihaniyeh51@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "حانیه",
@@ -250,7 +253,7 @@ namespace Project2_Api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "heyadrihaniyeh51@gmail.com",
                             NormalizedUserName = "09105586224",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAPbGjMVx20w4k2tyt0iEd0m+BwnEGpz1eM4SiMOlqX5s7v4f0VV132snGHKggLw/w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAq1QnNd/jcGIX6IqOi/5CX+3NGVqxFSF0L3LKW9NrfPL0Wy/gqRQziBRctwxqoenQ==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

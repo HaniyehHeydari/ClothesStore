@@ -38,8 +38,8 @@ public class StoreDbContext : IdentityDbContext<AppUser>
                PhoneNumberConfirmed = true,
                PasswordHash = hasher.HashPassword(null, "Admin1234#"),
                SecurityStamp = string.Empty,
-               FirstName= "haniye",
-               LastName="heydari"
+               FirstName= "حانیه",
+               LastName="حیدری"
             });
         builder.Entity<IdentityUserRole<string>>().HasData(
             new IdentityUserRole<string>
