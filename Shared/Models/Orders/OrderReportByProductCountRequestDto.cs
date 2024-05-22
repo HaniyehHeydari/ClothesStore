@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Models.Orders
 {
-    public class OrderReportByProductRequestDto
+    public class OrderReportByProductCountRequestDto
     {
         public int PageSize { get; set; }
         public int PageNo { get; set; }

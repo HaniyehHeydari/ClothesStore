@@ -54,12 +54,6 @@ namespace IbulakStoreServer.Controllers
             var result = await _orderService.SearchAsync(model);
             return Ok(result);
         }
-        // [HttpPost]
-        // public async Task<IActionResult> Add(Order order)
-        // {
-        //    await _orderService.AddAsync(order);
-        //    return Ok();
-        // }
         [HttpPost("AddRange")]
         public async Task<IActionResult> AddRange(List<OrderAddRequestDto> orders)
         {
@@ -108,10 +102,16 @@ namespace IbulakStoreServer.Controllers
             await _orderService.DeleteAsync(id);
             return Ok();
         }
-        [HttpGet("OrdersReportByProduct")]
-        public async Task<IActionResult> OrdersReportByProduct([FromQuery]OrderReportByProductRequestDto model)
+        [HttpGet("OrdersReportByProductPrice")]
+        public async Task<IActionResult> OrdersReportByProductPrice([FromQuery]OrderReportByProductPriceRequestDto model)
         {
-           var result = await _orderService.OrdersReportByProductAsync(model);
+           var result = await _orderService.OrdersReportByProductPriceAsync(model);
+            return Ok(result);
+        }
+        [HttpGet("OrderReportByProductCount")]
+        public async Task<IActionResult> OrderReportByProductCount([FromQuery] OrderReportByProductCountRequestDto model)
+        {
+            var result = await _orderService.OrdersReportByProductCountAsync(model);
             return Ok(result);
         }
     }

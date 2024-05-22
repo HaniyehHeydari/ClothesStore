@@ -132,7 +132,7 @@ namespace Project2_Api.Services
             return Orders;
         }
 
-        public async Task<List<OrderReportByProductResponseDto>> OrdersReportByProductAsync(OrderReportByProductRequestDto model)
+        public async Task<List<OrderReportByProductPriceResponseDto>> OrdersReportByProductPriceAsync(OrderReportByProductPriceRequestDto model)
         {
             var ordersQuery = _context.Orders.Where(a =>
                                        (model.FromDate == null || a.CreatedAt >= model.FromDate)
@@ -146,7 +146,7 @@ namespace Project2_Api.Services
                 });
             var productsQuery = from product in _context.Products
                            from order in ordersQuery.Where(a => a.ProductId == product.Id).DefaultIfEmpty()
-                           select new OrderReportByProductResponseDto
+                           select new OrderReportByProductPriceResponseDto
                            {
                                ProductId = product.Id,
                                ProductName =product.Name,
@@ -159,6 +159,33 @@ namespace Project2_Api.Services
             var result = await productsQuery.ToListAsync();
             return result;
 
+        }
+        public async Task<List<OrderReportByProductPriceResponseDto>> OrdersReportByProductCountAsync(OrderReportByProductCountRequestDto model)
+        {
+            var ordersQuery = _context.Orders.Where(a =>
+                                       (model.FromDate == null || a.CreatedAt >= model.FromDate)
+                                    && (model.ToDate == null || a.CreatedAt <= model.ToDate)
+                                   )
+                .GroupBy(a => a.ProductId)
+                .Select(a => new
+                {
+                    ProductId = a.Key,
+                    TotalSum = a.Sum(s => s.Count),
+                });
+            var productsQuery = from product in _context.Products
+                                from order in ordersQuery.Where(a => a.ProductId == product.Id).DefaultIfEmpty()
+                                select new OrderReportByProductPriceResponseDto
+                                {
+                                    ProductId = product.Id,
+                                    ProductName = product.Name,
+                                    ProductCategoryName = product.Category.Name,
+                                    TotalSum = (int?)order.TotalSum
+
+                                };
+            productsQuery = productsQuery.Skip(model.PageNo * model.PageSize)
+                                .Take(model.PageSize);
+            var result = await productsQuery.ToListAsync();
+            return result;
         }
     }
 }

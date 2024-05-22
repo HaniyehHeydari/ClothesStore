@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Shared.Models.Orders
 {
-    public class OrderReportByProductResponseDto
+    public class OrderReportByProductCountResponseDto
     {
-        public string ProductName { get; set; }
         public int ProductId { get; set; }
-        public string ProductCategoryName { get; set; }
-        public int? TotalSum { get; set; }
+        public string ProductName { get; set; }
+        public int? Count { get; set; }
     }
 }
