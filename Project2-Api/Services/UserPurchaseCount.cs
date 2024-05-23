@@ -1,4 +1,4 @@
-﻿namespace Project2_Api.Services
+﻿                                                          namespace Project2_Api.Services
 {
     internal class UserPurchaseCount
     {
