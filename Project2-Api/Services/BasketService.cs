@@ -141,5 +141,26 @@ namespace Project2_Api.Services
 
             return report;
         }
+        public async Task<List<BasketReportByUserProductCountResponceDto>> BasketReportByUserProductCountAsync(BasketReportByUserProductCountRequestDto model)
+        {
+            var BasketsQuery = await _context.Baskets.Where(a => a.User.Id == model.UserId
+                                   )
+                .GroupBy(a => a.UserId) 
+                .Select(g => new
+                {
+                    UserId = g.Key,
+                    TotalSum = g.Sum(s => s.Count)
+                })
+            .ToListAsync();
+            var result = BasketsQuery.Select(b => new BasketReportByUserProductCountResponceDto
+            {
+
+                UserId = model.UserId,
+                Count = b.TotalSum
+            }).ToList();
+
+            return result;
+
+        }
     }
 }

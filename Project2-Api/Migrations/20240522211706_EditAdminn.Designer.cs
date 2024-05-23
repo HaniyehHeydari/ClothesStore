@@ -11,8 +11,8 @@ using Project2_Api.Data.Domain;
 namespace Project2_Api.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20240522170604_EditUser")]
-    partial class EditUser
+    [Migration("20240522211706_EditAdminn")]
+    partial class EditAdminn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace Project2_Api.Migrations
                         },
                         new
                         {
-                            Id = "8bb11e06-36ad-47ec-8f11-7c97fe3fa3a6",
+                            Id = "f91fb77f-7973-4bc8-996e-3f55de1e0513",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -245,19 +245,19 @@ namespace Project2_Api.Migrations
                         {
                             Id = "2426167f-842e-4933-ae72-d8dfe34abf78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "44756ed7-be21-4e6d-929c-a912682fb7c9",
+                            ConcurrencyStamp = "1f7b38f3-d035-4f50-9349-bd56959e615b",
                             Email = "heyadrihaniyeh51@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "حانیه",
                             LastName = "حیدری",
                             LockoutEnabled = false,
                             NormalizedEmail = "heyadrihaniyeh51@gmail.com",
-                            NormalizedUserName = "09105586224",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAPbGjMVx20w4k2tyt0iEd0m+BwnEGpz1eM4SiMOlqX5s7v4f0VV132snGHKggLw/w==",
+                            NormalizedUserName = "09215682923",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBDHNGINNj+RO2vsuR/Ecnw74peJVTVzatoFqseO+ZnlEeuRzfgh2twltzsS5juARw==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "09105586224"
+                            UserName = "09215682923"
                         });
                 });
 

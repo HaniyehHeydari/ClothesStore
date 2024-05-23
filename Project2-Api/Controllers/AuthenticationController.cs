@@ -25,27 +25,27 @@ namespace Project2_Api.Controllers
             _SignInManager = signInManager;
             _context = context;
         }
+      
+
         [HttpPost("Register")]
-        
-        public async Task <IActionResult> Register([FromBody] RegisterRequestDto model)
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto model)
         {
-                var user = await _userManager.FindByNameAsync(model.Mobile);
-                if (user!=null)
-                {
-                    return BadRequest("با این شماره همراه قبلا ثبت نام انجام شده است");
-                }
-                 user = new AppUser
-                {
-                    UserName = model.Mobile,
-                    PhoneNumber = model.Mobile,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName
+            var user = await _userManager.FindByNameAsync(model.Mobile);
+            if (user != null)
+            {
+                return BadRequest("با این شماره همراه قبلا ثبت نام انجام شده است");
+            }
+            user = new AppUser
+            {
+                UserName = model.Mobile,
+                PhoneNumber = model.Mobile,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
 
-                 };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
-                await _userManager.AddToRoleAsync(user, "User");
-                return Ok();
+            var result = await _userManager.CreateAsync(user, model.Password);
+            await _userManager.AddToRoleAsync(user, "User");
+            return Ok();
         }
         [HttpPost("Login")]
         public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequestDto login, [FromQuery] bool? useCookies, [FromQuery] bool? useSessionCookies, [FromServices] IServiceProvider sp)

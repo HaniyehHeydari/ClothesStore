@@ -86,5 +86,11 @@ namespace Project2_Api.Controllers
             var result = await _basketService.BasketReportByUserAsync(model);
             return Ok(result);
         }
+        [HttpGet("BasketReportByUserProductCountAsync")]
+        public async Task<IActionResult> BasketReportByUserProductCountAsync([FromQuery] BasketReportByUserProductCountRequestDto model)
+        {
+            var result = await _basketService.BasketReportByUserProductCountAsync(model);
+            return Ok(result);
+        }
     }
 }

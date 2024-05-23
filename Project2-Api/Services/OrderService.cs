@@ -160,7 +160,7 @@ namespace Project2_Api.Services
             return result;
 
         }
-        public async Task<List<OrderReportByProductPriceResponseDto>> OrdersReportByProductCountAsync(OrderReportByProductCountRequestDto model)
+        public async Task<List<OrderReportByProductCountResponseDto>> OrdersReportByProductCountAsync(OrderReportByProductCountRequestDto model)
         {
             var ordersQuery = _context.Orders.Where(a =>
                                        (model.FromDate == null || a.CreatedAt >= model.FromDate)
@@ -170,16 +170,15 @@ namespace Project2_Api.Services
                 .Select(a => new
                 {
                     ProductId = a.Key,
-                    TotalSum = a.Sum(s => s.Count),
+                    TotalCount = a.Sum(s => s.Count),
                 });
             var productsQuery = from product in _context.Products
                                 from order in ordersQuery.Where(a => a.ProductId == product.Id).DefaultIfEmpty()
-                                select new OrderReportByProductPriceResponseDto
+                                select new OrderReportByProductCountResponseDto
                                 {
                                     ProductId = product.Id,
                                     ProductName = product.Name,
-                                    ProductCategoryName = product.Category.Name,
-                                    TotalSum = (int?)order.TotalSum
+                                    TotalCount = (int?)order.TotalCount
 
                                 };
             productsQuery = productsQuery.Skip(model.PageNo * model.PageSize)

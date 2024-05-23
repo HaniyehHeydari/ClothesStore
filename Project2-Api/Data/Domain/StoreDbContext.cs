@@ -30,8 +30,8 @@ public class StoreDbContext : IdentityDbContext<AppUser>
             new AppUser
             {
                Id = ADMIN_ID,
-               UserName = "09105586224",
-               NormalizedUserName = "09105586224",
+               UserName = "09215682923",
+               NormalizedUserName = "09215682923",
                Email = "heyadrihaniyeh51@gmail.com",
                NormalizedEmail = "heyadrihaniyeh51@gmail.com",
                EmailConfirmed = true,

@@ -11,8 +11,8 @@ using Project2_Api.Data.Domain;
 namespace Project2_Api.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20240522103149_AddAdminSeedData")]
-    partial class AddAdminSeedData
+    [Migration("20240522211412_EditAdmin")]
+    partial class EditAdmin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace Project2_Api.Migrations
                         },
                         new
                         {
-                            Id = "3c81513f-540a-4b31-a195-dbb50abbf054",
+                            Id = "1b7c8bb7-f218-4b00-b9d2-560313cbbcbf",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -188,6 +188,14 @@ namespace Project2_Api.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
 
@@ -237,17 +245,19 @@ namespace Project2_Api.Migrations
                         {
                             Id = "2426167f-842e-4933-ae72-d8dfe34abf78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b7b4b317-a963-476d-af6e-e6c4ef422532",
+                            ConcurrencyStamp = "8447b6aa-ae8c-4190-85f6-2e96bbc52409",
                             Email = "heyadrihaniyeh51@gmail.com",
                             EmailConfirmed = true,
+                            FirstName = "حانیه",
+                            LastName = "حیدری",
                             LockoutEnabled = false,
                             NormalizedEmail = "heyadrihaniyeh51@gmail.com",
-                            NormalizedUserName = "09105586224",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBBZj2OaZSeQ1gGttvkmDk772sO9X57hPUX7Iad313Zp0Tun2f62XCjsEXb8JoESWA==",
+                            NormalizedUserName = "09215682923",
+                            PasswordHash = "AQAAAAIAAYagAAAAEM5x5iG8HH9+pFB4fK8tfII7xEoaVe91Y0WirEBI9v2ZWzwLkMEKNRD1aE/ooaqgow==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "09105586224"
+                            UserName = "09215682923"
                         });
                 });
 
@@ -260,20 +270,23 @@ namespace Project2_Api.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Baskets");
                 });
@@ -312,8 +325,9 @@ namespace Project2_Api.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("price")
                         .HasColumnType("INTEGER");
@@ -366,9 +380,8 @@ namespace Project2_Api.Migrations
 
             modelBuilder.Entity("Project2_Api.Data.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -442,11 +455,15 @@ namespace Project2_Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project2_Api.Data.Entities.User", "User")
-                        .WithMany("Baskets")
+                    b.HasOne("Project2_Api.Data.Entities.AppUser", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Project2_Api.Data.Entities.User", null)
+                        .WithMany("Baskets")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Product");
 

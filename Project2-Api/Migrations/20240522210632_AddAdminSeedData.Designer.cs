@@ -11,8 +11,8 @@ using Project2_Api.Data.Domain;
 namespace Project2_Api.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20240522165130_EditName")]
-    partial class EditName
+    [Migration("20240522210632_AddAdminSeedData")]
+    partial class AddAdminSeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace Project2_Api.Migrations
                         },
                         new
                         {
-                            Id = "1fc13af3-d988-4e6f-bd39-9ef6b8ce0595",
+                            Id = "a8d97e7a-095a-412a-8f86-995f1eff123a",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -245,7 +245,7 @@ namespace Project2_Api.Migrations
                         {
                             Id = "2426167f-842e-4933-ae72-d8dfe34abf78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f6b7b9f0-51c4-493a-b4f9-6b9e84ad4a2b",
+                            ConcurrencyStamp = "27e5f46e-28dc-45dd-bf52-097f93bf84cb",
                             Email = "heyadrihaniyeh51@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "حانیه",
@@ -253,7 +253,7 @@ namespace Project2_Api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "heyadrihaniyeh51@gmail.com",
                             NormalizedUserName = "09105586224",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAq1QnNd/jcGIX6IqOi/5CX+3NGVqxFSF0L3LKW9NrfPL0Wy/gqRQziBRctwxqoenQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENEFNwq45JSrP5NqIJD4MDYObIWgtiuikrDDmbhSoaAx/oYc7xCVPPqL80t5K3f4Cw==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
