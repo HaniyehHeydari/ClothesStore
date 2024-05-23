@@ -234,5 +234,40 @@ namespace Project2_Api.Services
             };
             return result;
         }
+
+        public async Task<List<OrderReportByDateResponseDto>> OrdersReportByDateAsync(OrderReportByDateRequestDto model)
+        {
+           
+            var ordersQuery = _context.Orders.Where(a =>
+                                (model.FromDate == null || a.CreatedAt >= model.FromDate)
+                               && (model.ToDate == null || a.CreatedAt <= model.ToDate)
+                                )
+                .GroupBy(a => a.ProductId)
+                .Select(a => new
+                {
+                    ProductId = a.Key,
+                    TotalSum = a.Sum(s => s.price),
+                    Count = a.Sum(s => s.Count)
+
+                });
+
+            var productsQuery = from product in _context.Products
+                                from order in ordersQuery.Where(a => a.ProductId == product.Id).DefaultIfEmpty()
+                                select new OrderReportByDateResponseDto
+                                {
+                                    ProductName = product.Name,
+                                    ProductCategoryName = product.Category.Name,
+                                    ProductId = product.Id,
+                                    TotalSum = (int?)order.TotalSum,
+                                    TotalCount = (int?)order.Count
+                                };
+
+            productsQuery = productsQuery.Skip(model.PageNo * model.PageSize)
+                                .Take(model.PageSize);
+            var result = await productsQuery.ToListAsync();
+            return result;
+        }
+
+
     }
 }  
