@@ -70,5 +70,11 @@ namespace Project2_Api.Controllers
             await _productService.DeleteAsync(id);
             return Ok();
         }
+        [HttpGet("GetsUnAvailableProducts")]
+        public async Task<IActionResult> GetsUnAvailableProductsAsync()
+        {
+            var result = await _productService.GetsUnAvailableProductsAsync();
+            return Ok(result);
+        }
     }
 }

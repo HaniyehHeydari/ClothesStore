@@ -134,5 +134,10 @@ namespace Project2_Api.Services
                                  .ToListAsync();
             return Products;
         }
+        public async Task<List<Product>> GetsUnAvailableProductsAsync()
+        {
+            List<Product> productsZeroCount = await _context.Products.Where(p => p.Count <= 0).ToListAsync();
+            return productsZeroCount;
+        }
     }
 }
