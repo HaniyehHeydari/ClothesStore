@@ -217,5 +217,22 @@ namespace Project2_Api.Services
 
             return result;
         }
+
+        public async Task<List<OrderTotalResponseDto>> OrderTotalAsync(OrderTotalRequestDto model)
+        {
+            var TotalSum = await _context.Orders
+            .Select(o => o.price * o.Count)
+            .SumAsync();
+            var TotalCount = await _context.Orders.CountAsync();
+            var result = new List<OrderTotalResponseDto>
+            {
+                new OrderTotalResponseDto
+                {
+                    TotalSum = TotalSum,
+                    TotalCount = TotalCount
+                }
+            };
+            return result;
+        }
     }
 }  
