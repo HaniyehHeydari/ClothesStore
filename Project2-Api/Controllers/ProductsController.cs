@@ -18,7 +18,7 @@ namespace Project2_Api.Controllers
         {
             _productService = productService;
         }
-        [Authorize(Roles ="User")]
+        [Authorize(Roles ="Admin")]
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
