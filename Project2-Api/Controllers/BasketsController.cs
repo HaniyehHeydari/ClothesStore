@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project2_Api.Data.Entities;
 using Project2_Api.Services;
@@ -18,30 +19,35 @@ namespace Project2_Api.Controllers
             _basketService = basketService;
             _productService = productService;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _basketService.GetAsync(id);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Gets()
         {
             var result = await _basketService.GetsAsync();
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetsByProduct")]
         public async Task<IActionResult> GetsByProduct(int productId)
         {
             var result = await _basketService.GetsByProductAsync(productId);
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetsByUser")]
         public async Task<IActionResult> GetsByUser(string userId)
         {
             var result = await _basketService.GetsByUserAsync(userId);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery]SearchRequestBasketDto model)
         {
@@ -53,6 +59,7 @@ namespace Project2_Api.Controllers
         /// </summary>
         /// <param name="basket">اطلاعات محصول</param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add(BasketAddRequestDto basket)
         {
@@ -68,24 +75,28 @@ namespace Project2_Api.Controllers
             await _basketService.AddAsync(basket);
             return Ok();
         }
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody] Basket basket)
         {
             await _basketService.EditAsync(basket);
             return Ok();
         }
+        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             await _basketService.DeleteAsync(id);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("BasketReportByUser")]
         public async Task<IActionResult> BasketReportByUser([FromQuery] BasketReportByUserRequestDto model)
         {
             var result = await _basketService.BasketReportByUserAsync(model);
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("BasketReportByUserProductCountAsync")]
         public async Task<IActionResult> BasketReportByUserProductCountAsync([FromQuery] BasketReportByUserProductCountRequestDto model)
         {

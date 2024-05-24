@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project2_Api.Data.Domain;
@@ -23,37 +24,42 @@ namespace IbulakStoreServer.Controllers
             _orderService = orderService;
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _orderService.GetAsync(id);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Gets()
         {
             var result = await _orderService.GetsAsync();
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetsByProduct")]
         public async Task<IActionResult> GetsByProduct(int productId)
         {
             var result = await _orderService.GetsByProductAsync(productId);
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetsByUser")]
         public async Task<IActionResult> GetsByUser(string userId)
         {
             var result = await _orderService.GetsByUserAsync(userId);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery] SearchRequestOrderDto model)
         {
             var result = await _orderService.SearchAsync(model);
             return Ok(result);
         }
+        [Authorize]
         [HttpPost("AddRange")]
         public async Task<IActionResult> AddRange(List<OrderAddRequestDto> orders)
         {
@@ -89,43 +95,49 @@ namespace IbulakStoreServer.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody] Order order)
         {
             await _orderService.EditAsync(order);
             return Ok();
         }
+        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             await _orderService.DeleteAsync(id);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("OrdersReportByProductPrice")]
         public async Task<IActionResult> OrdersReportByProductPrice([FromQuery]OrderReportByProductPriceRequestDto model)
         {
            var result = await _orderService.OrdersReportByProductPriceAsync(model);
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("OrderReportByProductCount")]
         public async Task<IActionResult> OrderReportByProductCount([FromQuery] OrderReportByProductCountRequestDto model)
         {
             var result = await _orderService.OrdersReportByProductCountAsync(model);
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("OrderReportByProductName")]
         public async Task<IActionResult> OrderReportByProductName([FromQuery] OrderReportByProductNameRequestDto model)
         {
             var result = await _orderService.OrderReportByProductNameAsync(model);
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("OrderTotal")]
         public async Task<IActionResult> OrderTotalAsync([FromQuery] OrderTotalRequestDto model)
         {
             var result = await _orderService.OrderTotalAsync(model);
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("OrdersReportByDate")]
         public async Task<IActionResult> OrdersReportByDate([FromQuery] OrderReportByDateRequestDto model)
         {

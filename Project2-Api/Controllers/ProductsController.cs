@@ -18,26 +18,28 @@ namespace Project2_Api.Controllers
         {
             _productService = productService;
         }
-        [Authorize(Roles ="Admin")]
-
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _productService.GetAsync(id);
             return Ok(result);
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Gets()
         {
             var result = await _productService.GetsAsync();
             return Ok(result);
         }
+        [Authorize]
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery]SearchRequestProductDto model)
         {
             var result = await _productService.SearchAsync(model);
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetByCategory")]
         public async Task<IActionResult> GetsByCategory(int categoryId)
         {
@@ -51,25 +53,27 @@ namespace Project2_Api.Controllers
         /// <returns></returns>
         /// 
         [Authorize(Roles = "Admin")]
-
         [HttpPost]
         public async Task<IActionResult> Add(ProductAddRequestDto product)
         {
           await _productService.AddAsync(product);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody]Product product)
         {
             await _productService.EditAsync(product);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             await _productService.DeleteAsync(id);
             return Ok();
         }
+        [Authorize]
         [HttpGet("GetsUnAvailableProducts")]
         public async Task<IActionResult> GetsUnAvailableProductsAsync()
         {
