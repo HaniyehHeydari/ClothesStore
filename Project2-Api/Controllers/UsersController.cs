@@ -16,9 +16,9 @@ namespace Project2_Api.Controllers
             _userService = userService;
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(string UserId)
         {
-            var result = await _userService.GetAsync(id);
+            var result = await _userService.GetAsync(UserId);
             if (result == null)
             {
                 return NotFound("کاربری با این شناسه پیدا نشد.");
@@ -43,15 +43,15 @@ namespace Project2_Api.Controllers
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] User user)
+        public async Task<IActionResult> Edit([FromBody] AppUser user)
         {
             await _userService.EditAsync(user);
             return Ok();
         }
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string UserId)
         {
-            await _userService.DeleteAsync(id);
+            await _userService.DeleteAsync(UserId);
             return Ok();
         }
     }

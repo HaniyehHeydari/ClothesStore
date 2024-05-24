@@ -51,7 +51,7 @@ namespace Project2_Api.Migrations
                         },
                         new
                         {
-                            Id = "22524faa-67ba-4d56-b25e-e11cf5f2b8a1",
+                            Id = "aa66f42d-f92c-4e7c-9133-79ab2dddfd90",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -242,19 +242,19 @@ namespace Project2_Api.Migrations
                         {
                             Id = "2426167f-842e-4933-ae72-d8dfe34abf78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f2be349e-cf3d-4fd6-807e-6afd01996775",
-                            Email = "heyadrihaniyeh52@gmail.com",
+                            ConcurrencyStamp = "9b4ebdba-1405-4915-938f-4f29fb9b8abe",
+                            Email = "heyadrihaniyeh51@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "حانیه",
                             LastName = "حیدری",
                             LockoutEnabled = false,
-                            NormalizedEmail = "heyadrihaniyeh52@gmail.com",
-                            NormalizedUserName = "09215682925",
-                            PasswordHash = "AQAAAAIAAYagAAAAED9CKqgwY2SNihZV/cXvaEN5Z6WkCv/ACSDocx5bLs79eYbrFezJ9uuyIpUtPzvxyw==",
+                            NormalizedEmail = "heyadrihaniyeh51@gmail.com",
+                            NormalizedUserName = "09215682923",
+                            PasswordHash = "AQAAAAIAAYagAAAAEISauKETHM67FLLf9ZNMg7PEED2DLl3YSXJC5E0w2iyQpm4d+JXKa3VT8Pl0zc8DPg==",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "09215682925"
+                            UserName = "09215682923"
                         });
                 });
 
@@ -274,16 +274,11 @@ namespace Project2_Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId1")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Baskets");
                 });
@@ -375,24 +370,6 @@ namespace Project2_Api.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Project2_Api.Data.Entities.User", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -453,14 +430,10 @@ namespace Project2_Api.Migrations
                         .IsRequired();
 
                     b.HasOne("Project2_Api.Data.Entities.AppUser", "User")
-                        .WithMany()
+                        .WithMany("Baskets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Project2_Api.Data.Entities.User", null)
-                        .WithMany("Baskets")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Product");
 
@@ -475,7 +448,7 @@ namespace Project2_Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project2_Api.Data.Entities.User", "User")
+                    b.HasOne("Project2_Api.Data.Entities.AppUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -497,19 +470,19 @@ namespace Project2_Api.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Project2_Api.Data.Entities.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Project2_Api.Data.Entities.Product", b =>
+            modelBuilder.Entity("Project2_Api.Data.Entities.AppUser", b =>
                 {
                     b.Navigation("Baskets");
 
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Project2_Api.Data.Entities.User", b =>
+            modelBuilder.Entity("Project2_Api.Data.Entities.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Project2_Api.Data.Entities.Product", b =>
                 {
                     b.Navigation("Baskets");
 

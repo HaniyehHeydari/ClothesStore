@@ -12,19 +12,19 @@ namespace Project2_Api.Services
         {
             _context = context;
         }
-        public async Task<User?> GetAsync(int id)
+        public async Task<AppUser?> GetAsync(string UserId)
         {
-            User? user = await _context.Users.FindAsync(id);
+            AppUser? user = await _context.Users.FindAsync(UserId);
             return user;
         }
-        public async Task<List<User?>> GetsAsync()
+        public async Task<List<AppUser?>> GetsAsync()
         {
-            List<User> users = await _context.Users.ToListAsync();
+            List<AppUser> users = await _context.Users.ToListAsync();
             return users;
         }
         public async Task AddAsync(UserAddRequestDto model)
         {
-            User user = new User
+            AppUser user = new AppUser
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
@@ -32,9 +32,9 @@ namespace Project2_Api.Services
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
-        public async Task EditAsync(User user)
+        public async Task EditAsync(AppUser user)
         {
-            User? oldUser = await _context.Users.FindAsync(user.Id);
+            AppUser? oldUser = await _context.Users.FindAsync(user.Id);
             if (oldUser is null)
             {
                 throw new Exception("کاربری با این شناسه پیدا نشد.");
@@ -44,9 +44,9 @@ namespace Project2_Api.Services
             _context.Users.Update(oldUser);
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string UserId)
         {
-            User? user = await _context.Users.FindAsync(id);
+            AppUser? user = await _context.Users.FindAsync(UserId);
             if (user is null)
             {
                 throw new Exception("کاربری با این شناسه پیدا نشد.");

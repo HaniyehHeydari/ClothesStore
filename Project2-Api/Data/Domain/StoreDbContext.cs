@@ -10,7 +10,7 @@ public class StoreDbContext : IdentityDbContext<AppUser>
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
-    public DbSet<User> Users { get; set; }
+    public DbSet<AppUser> Users { get; set; }
     public DbSet<Basket> Baskets { get; set; }
     public DbSet<Order> Orders { get; set; }
     public StoreDbContext(DbContextOptions<StoreDbContext> options)

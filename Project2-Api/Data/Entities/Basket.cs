@@ -5,7 +5,7 @@ namespace Project2_Api.Data.Entities
     public class Basket
     {
         public int Id { get; set; }
-        [ForeignKey("User")]
+        [ForeignKey("AppUser")]
         public string UserId { get; set; }
         [ForeignKey("Product")]
         public int ProductId { get; set; }
